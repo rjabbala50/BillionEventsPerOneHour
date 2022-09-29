@@ -1,27 +1,28 @@
+
 import socket
 
-def server_program():
-
+def tcpServer():
     host = socket.gethostname()
-    port = 9000  
+    port = 9000
 
-    server_socket = socket.socket()
-    server_socket.bind((host, port))  
+    srvSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    srvSocket.bind((host, port))
 
-    server_socket.listen(2)	
+    srvSocket.listen(2)
     print('Server is ready to accept  2 client connections')
-    conn, address = server_socket.accept()  
-    print("Connection from: " + str(address))
-    while True:
-        data = conn.recv(999999).decode()
-#        if not data:
-            # if data is not received break
-         #   break
-       # print("from connected user: " + str(data))
-       # data = input(' -> ')
-       # conn.send(data.encode()) 
 
-    conn.close()  
+    client, address = srvSocket.accept()
+    print ("Acccepted conn from", address)
+    counter =1 
+    while 1:
+        data = client.recv(1024)
+        data = data.decode('UTF-8')
+        print(" Received from Client: ",data)
+        message = "Hi from Server"
+        client.send(message.encode('UTF-8'))
+        print("# ",counter)
+        counter += 1
 
+    client.close()
 if __name__ == '__main__':
-    server_program()
+    tcpServer()
