@@ -1,34 +1,21 @@
-
 import socket
+import time
 
-def client():
-    host = socket.gethostname()
-    server_port = 9000
+HOST, PORT = "localhost", 9999
+data = "Hey Arunachala:whatsup man "
 
-    client_socket = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-    client_socket.connect((host, server_port))
+with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
+    sock.connect((HOST, PORT))
 
-    counter=1
     while 1:
-        message = 'Hey, whatsup bro------- '
-        client_socket.send(message.encode('UTF-8'))
-        data = client_socket.recv(1024)
-        print ('Data sent to server: ', data.decode())
-        print ("#",counter)
-        counter += 1
+        sock.sendall(bytes(data + "\n", "utf-8"))
+        print("Sent:     {}".format(data))
+        received = str(sock.recv(1024), "utf-8")
+        print("Received: {}".format(received))
 
-    client_socket.close()
-
-'''
-    with open('../tests/testinputBevents.txt', 'r') as file:
-       for line in file:
-           client_socket.send(line.encode('UTF-8'))
-           data = client_socket.recv(1024)
-           print ('Received from server: ', data.decode())
-    file.close()
-    client_socket.close()
-    '''
+        time.sleep(1000)
+        exit(0)
 
 
-if __name__ == '__main__':
-    client()
+
+z00

@@ -1,28 +1,13 @@
+import socketserver
 
-import socket
+class MyTCPHandler(socketserver.StreamRequestHandler):
+    def handle(self):
+        self.data = self.rfile.readline().strip()
+        print("{} wrote:".format(self.client_address[0]))
+        print(self.data)
+        self.wfile.write(self.data.upper())
 
-def tcpServer():
-    host = socket.gethostname()
-    port = 9000
-
-    srvSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    srvSocket.bind((host, port))
-
-    srvSocket.listen(2)
-    print('Server is ready to accept  2 client connections')
-
-    client, address = srvSocket.accept()
-    print ("Acccepted conn from", address)
-    counter =1 
-    while 1:
-        data = client.recv(1024)
-        data = data.decode('UTF-8')
-        print(" Received from Client: ",data)
-        message = "Hi from Server"
-        client.send(message.encode('UTF-8'))
-        print("# ",counter)
-        counter += 1
-
-    client.close()
-if __name__ == '__main__':
-    tcpServer()
+if __name__ == "__main__":
+    HOST, PORT = "localhost", 9999
+    with socketserver.TCPServer((HOST, PORT), MyTCPHandler) as server:
+        server.serve_forever()
