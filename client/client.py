@@ -14,10 +14,11 @@ def get_file_stream():
         sys.exit(1)
     return file
 
-with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
-    sock.connect((HOST, PORT))
-    file = get_file_stream()
-    message = file.read()
-    sock.send(bytes(message, "utf-8")),
-    #print ("Bytes: ",len(lines))
-    #print("Sent:     {}".format(lines)),
+if __name__ == "__main__":
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
+        sock.connect((HOST, PORT))
+        file = get_file_stream()
+        message = file.read()
+        sock.send(bytes(message, "utf-8")),
+        #print ("Bytes: ",len(lines))
+        #print("Sent:     {}".format(lines)),
