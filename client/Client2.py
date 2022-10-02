@@ -18,6 +18,6 @@ if __name__ == "__main__":
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
         sock.connect((HOST, PORT))
         file = get_file_stream()
-        message = file.read(16)
-        sock.send(bytes(message, "utf-8"))
+        message = file.read(10)
+        sock.send(bytes(message, "utf-8")),
 
