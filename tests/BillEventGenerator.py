@@ -10,5 +10,8 @@ def generateEvents():
                procMsges += 1
          file.close()
 
+def MaxParallelConnections32Bit() :
+    print()
+
 if __name__ == '__main__':
    generateEvents()
